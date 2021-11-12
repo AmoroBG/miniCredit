@@ -1,8 +1,8 @@
 // REQUIRE MODULES
 const express = require("express")
 
-
 // IMPORT MODULES- OWN MODULES/ FILES
+const dbconnect = require("./server/database/database")
 
 
 // GLOBAL VARIABLES
@@ -12,6 +12,7 @@ const express = require("express")
 const app = express()
 
 // DB CONNECTION
+dbconnect
 
 
 // MIDDLEWARE
