@@ -2,8 +2,13 @@
 const express = require("express")
 const mongoose = require("mongoose")
 
+
 // IMPORT MODULES- OWN MODULES/ FILES
 const dbconnect = require("./server/database/database")
+const usersRoute = require("./routes/users")
+
+
+
 
 
 // GLOBAL VARIABLES
@@ -15,29 +20,8 @@ const app = express()
 // DB CONNECTION
 dbconnect
 
-// userSchema
-const userSchema = {
-    firstName: {
-        type: "String",
-        require: true
-    },
-    lastName: {
-        type: "String",
-        require: true
-    },
-    email: {
-        type: "String",
-        require: true
-    },
-    date: {
-        type: "date",
-        default: Date.now
-    }
 
-}
 
-// userModel
-const User = mongoose.model("User", userSchema)
 
 
 // MIDDLEWARE
@@ -54,29 +38,12 @@ app.get("/", function(req, res) {
     res.send("<h2> Welcome to Mini Credit </h2>")
 })
 
+// Users Route
+app.use("/users", usersRoute)
 
-// Register user - POST - "/register"
-app.post("/register", function(req, res) {
-    const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    })
-    user.save().then(function() {
-        res.send("User successfully added to db")
-    }).catch(function(err) {
-        res.send(err)
-    })
-})
 
-// Retrieve all users - GET - "/users"
-app.get("/users", function(req, res) {
-    User.find().then(function(users) {
-        res.send(users)
-    }).catch(function(err) {
-        res.send(err)
-    })
-})
+
+
 
 // Retrieve one user - GET - "/users/:userId"
 app.get("/users/:userId", function(req, res) {
