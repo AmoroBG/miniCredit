@@ -7,7 +7,7 @@ const users = require("../controllers/users")
 
 
 // Register user - POST - "/register"
-router.post("/register", users.postUser)
+router.post("/register", users.registerUser)
 
 // Retrieve all users - GET - "/"
 router.get("/", users.getAllUsers)
@@ -27,6 +27,9 @@ router.put("/:userId", users.updateAllUserRecords)
 
 // Update a specific record of a user - PATCH - "/:userId"
 router.patch("/:userId", users.updateSomeUserRecords)
+
+// User Login - POST - "/login"
+router.post("/login", users.userLogin)
 
 
 

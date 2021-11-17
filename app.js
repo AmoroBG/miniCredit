@@ -9,6 +9,7 @@ const dotenv = require("dotenv")
 const dbconnect = require("./server/database/database")
 const usersRoute = require("./routes/users")
 
+
 // LOAD CONFIG
 dotenv.config({ path: "./server/config/config.env" })
 
@@ -39,6 +40,7 @@ app.get("/", function(req, res) {
 
 // Users Route
 app.use("/users", usersRoute)
+
 
 
 
