@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 
 const User = require("../models/users")
+const requireAuthentication = require("../middlewares/auth")
     // LOAD CONFIG
 dotenv.config({ path: "../server/config/config.env" })
 

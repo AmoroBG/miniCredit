@@ -6,6 +6,7 @@ const router = express.Router()
 const users = require("../controllers/users")
 
 
+
 // Register user - POST - "/register"
 router.post("/register", users.registerUser)
 
