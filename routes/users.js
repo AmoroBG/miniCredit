@@ -31,6 +31,9 @@ router.patch("/:userId", users.updateSomeUserRecords)
 // User Login - POST - "/login"
 router.post("/login", users.userLogin)
 
+// User Logout - GET - "/logout"
+router.get("/logout", users.userLogout)
+
 
 
 
