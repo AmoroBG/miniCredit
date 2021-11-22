@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 
 const User = require("../models/users")
-const requireAuthentication = require("../middlewares/auth")
-    // LOAD CONFIG
+
+// LOAD CONFIG
 dotenv.config({ path: "../server/config/config.env" })
 
 // Register user - POST - "/register"
@@ -150,7 +150,6 @@ exports.userLogin = function(req, res) {
                     userId: user[0]._id.toString()
                 })
             }
-            console.log("3");
             return res.status(401).json({
                 message: "Auth Failed!"
             })
