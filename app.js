@@ -8,6 +8,8 @@ const dotenv = require("dotenv")
 // IMPORT MODULES- OWN MODULES/ FILES
 const dbconnect = require("./server/database/database")
 const usersRoute = require("./routes/users")
+const profileRoute = require("./routes/profile")
+
 
 
 // LOAD CONFIG
@@ -40,6 +42,9 @@ app.get("/", function(req, res) {
 
 // Users Route
 app.use("/users", usersRoute)
+    // Users Profile Route
+app.use("/profile", profileRoute)
+
 
 
 
