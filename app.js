@@ -9,7 +9,7 @@ const dotenv = require("dotenv")
 const dbconnect = require("./server/database/database")
 const usersRoute = require("./routes/users")
 const profileRoute = require("./routes/profile")
-
+const loanRoute = require("./routes/loan")
 
 
 // LOAD CONFIG
@@ -44,6 +44,8 @@ app.get("/", function(req, res) {
 app.use("/users", usersRoute)
     // Users Profile Route
 app.use("/profile", profileRoute)
+    // Loans Route
+app.use("/loan", loanRoute)
 
 
 

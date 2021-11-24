@@ -27,6 +27,10 @@ const loanSchema = {
         type: String,
         default: "Closed"
     },
+    // ownerDetails: {
+    //     type: String,
+    //     default: "Closed"
+    // },
     loanOpenDate: {
         type: Date,
         default: Date.now

@@ -72,7 +72,7 @@ exports.getOneUser = function(req, res) {
     })
 }
 
-// Delete all users - DELETE - "/users"
+// Delete all users - DELETE - "/"
 exports.deleteAllUsers = function(req, res) {
     User.remove().then(function() {
         res.status(200).json({
