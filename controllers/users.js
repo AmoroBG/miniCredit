@@ -27,10 +27,16 @@ exports.registerUser = function(req, res) {
                     const user = new User({
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
+                        otherNames: req.body.otherNames,
+                        phone: req.body.phone,
+                        gender: req.body.gender,
+                        DoB: req.body.DoB,
+                        address: req.body.address,
                         email: req.body.email,
                         password: hash
 
                     })
+
                     user.save().then(function() {
                         res.status(201).json({
                             message: "Registration successful"

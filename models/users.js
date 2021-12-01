@@ -12,6 +12,27 @@ const userSchema = {
         type: String,
         require: [true, "Please enter your last name"]
     },
+    otherNames: {
+        type: String,
+        require: false
+    },
+    phone: {
+        type: String,
+        require: [true, "Please enter your phone number"]
+    },
+    gender: {
+        type: String,
+        require: [true, "Please select your gender"]
+    },
+    DoB: {
+        type: String,
+        require: [true, "Please choose your date of birth"]
+    },
+    address: {
+        type: String,
+        require: [true, "Please provide your address"]
+    },
+
     email: {
         type: String,
         require: [true, "Please enter your email"],
@@ -31,6 +52,11 @@ const userSchema = {
     date: {
         type: Date,
         default: Date.now
+    },
+    // Account Number - Auto generate 16 digit AccountNumber (4-digit+DoB+registration year)
+    accountNumber: {
+        type: String,
+        default: Math.floor(1000 + Math.random() * 1000)
     }
 
 }
