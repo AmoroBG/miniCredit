@@ -22,7 +22,7 @@ const userSchema = {
     },
     gender: {
         type: String,
-        require: [true, "Please select your gender"]
+        default: "male"
     },
     DoB: {
         type: String,
