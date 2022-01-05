@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
-// OtherNames, Phone, Gender, DoB, Address, ProfileImage, AccountNumber
+// otherNames - Min (3), gender, DoB, address, email - Unique (true), password - Min (8), 
+// accountNumber -  Auto generate 4 digit number + 12 digit phone number, registrationDate - Auto generate, Id - Auto generate
 const profileSchema = {
     otherNames: {
         type: String,
