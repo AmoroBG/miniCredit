@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 
 const User = require("../models/users")
+const { use } = require('express/lib/application')
 
 // LOAD CONFIG
 dotenv.config({ path: "../server/config/config.env" })
@@ -24,6 +25,7 @@ exports.registerUser = function(req, res) {
                     })
                 } else {
                     // create user
+
                     const user = new User({
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
@@ -33,8 +35,8 @@ exports.registerUser = function(req, res) {
                         DoB: req.body.DoB,
                         address: req.body.address,
                         email: req.body.email,
-                        password: hash
-
+                        password: hash,
+                        accountNumber: (Math.floor(1000 + Math.random() * 1000)) + (req.body.phone)
                     })
 
                     user.save().then(function() {

@@ -18,7 +18,8 @@ const userSchema = {
     },
     phone: {
         type: String,
-        require: [true, "Please enter your phone number"]
+        require: [true, "Please enter your phone number"],
+        unique: true
     },
     gender: {
         type: String,
@@ -56,7 +57,7 @@ const userSchema = {
     // Account Number - Auto generate 16 digit AccountNumber (4-digit+DoB+registration year)
     accountNumber: {
         type: String,
-        default: Math.floor(1000 + Math.random() * 1000)
+        unique: true
     }
 
 }
