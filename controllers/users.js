@@ -11,7 +11,7 @@ dotenv.config({ path: "../server/config/config.env" });
 // Register user - POST - "/register"
 exports.registerUser = function (req, res) {
   // check if email already exist
-  User.find({ phone: req.body.phone })
+  User.find({ email: req.body.email })
     .exec()
     .then(function (user) {
       if (user.length >= 1) {
