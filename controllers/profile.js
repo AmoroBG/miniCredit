@@ -9,7 +9,7 @@ exports.updateUserProfile = (req, res) => {
         gender: req.body.gender,
     };
 
-    await  Profile.updateOne( {user: req.params.userId}, { $set: profileData }).then((data) => {
+    await  Profile.updateOne( {userId: req.params.userId}, { $set: profileData }).then((data) => {
         
         res.status(200).send({
             message:"success"
