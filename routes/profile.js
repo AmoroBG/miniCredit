@@ -4,6 +4,9 @@ const router = express.Router()
 
 const profile = require("../controllers/profile")
 
+
+// updateUser profile
+router.put("/update-profile/:userId", profile.updateUserProfile)
 // Retrieve all User Profile - GET - "/"
 router.get("/", profile.getAllProfile)
 

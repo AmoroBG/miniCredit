@@ -1,12 +1,14 @@
 const Profile = require("../models/profile")
 
-exports.updateUserProfile = (req, res) => {
+exports.updateUserProfile = async (req, res) => {
 // userid is passed as params from frontend
     const profileData = {
         firstName: req.body.firstName.toLowerCase(),
         lastName: req.body.lastName.toLowerCase(),
         phone: req.body.phone,
         gender: req.body.gender,
+        address: req.body.address,
+        accountNumber: Math.floor(1000 + Math.random() * 1000) + req.body.phone
     };
 
     await  Profile.updateOne( {userId: req.params.userId}, { $set: profileData }).then((data) => {
