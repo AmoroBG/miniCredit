@@ -48,12 +48,6 @@ app.use("/profile", profileRoute)
 app.use("/loan", loanRoute)
 
 
-
-
-
-
-
-
 // SERVER
 const PORT = 3000
 app.listen(PORT, function() {

@@ -4,61 +4,11 @@ const { isEmail } = require("validator")
 
 // userSchema
 const userSchema = {
-    firstName: {
-        type: String,
-        require: [true, "Please enter your first name"]
-    },
-    lastName: {
-        type: String,
-        require: [true, "Please enter your last name"]
-    },
-    otherNames: {
-        type: String,
-        require: false
-    },
-    phone: {
-        type: String,
-        require: [true, "Please enter your phone number"],
-        unique: true
-    },
-    gender: {
-        type: String,
-        default: "male"
-    },
-    DoB: {
-        type: String,
-        require: [true, "Please choose your date of birth"]
-    },
-    address: {
-        type: String,
-        require: [true, "Please provide your address"]
-    },
 
-    email: {
-        type: String,
-        require: [true, "Please enter your email"],
-        unique: true,
-        lowercase: true,
-        validate: [isEmail, "Please enter a valid email"]
-    },
-    password: {
-        type: String,
-        require: [true, "Please enter your password"],
-        minlength: [8, "Please password can not be less 8 characters"]
-    },
-    role: {
-        type: String,
-        default: "1"
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    // Account Number - Auto generate 16 digit AccountNumber (4-digit+DoB+registration year)
-    accountNumber: {
-        type: String,
-        unique: true
-    }
+    email: { type: String, unique: true },
+    password: String,
+    authCode: Number,
+    isEmailVerified: { type: Boolean, default: false }
 
 }
 

@@ -3,59 +3,127 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 
 const User = require("../models/users")
+const Profile = require("../models/profile")
 const { use } = require('express/lib/application')
+const generateOTP = require("../helpers/generateOtp");
+const verifyEmailTemplate = require("../templates/verifyEmailTemplate")
+const sendEmail = require("../helpers/sendEmail")
 
 // LOAD CONFIG
 dotenv.config({ path: "../server/config/config.env" })
 
 // Register user - POST - "/register"
-exports.registerUser = function(req, res) {
-    // check if email already exist
-    User.find({ email: req.body.email }).exec().then(function(user) {
-        if (user.length >= 1) {
-            res.status(409).json({
-                message: "Email already exist!"
-            })
-        } else {
-            // hash password
-            bcrypt.hash(req.body.password, 12, function(err, hash) {
-                if (err) {
-                    return res.status(500).json({
-                        error: err
-                    })
-                } else {
-                    // create user
+exports.registerUser = async (req, res) => {
 
-                    const user = new User({
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        otherNames: req.body.otherNames,
-                        phone: req.body.phone,
-                        gender: req.body.gender,
-                        DoB: req.body.DoB,
-                        address: req.body.address,
-                        email: req.body.email,
-                        password: hash,
-                        accountNumber: (Math.floor(1000 + Math.random() * 1000)) + (req.body.phone)
-                    })
+    let authCode = generateOTP()
+    // console.log(authCode)
+    if(!req.body.email){
+        res.status(400).send({message: "Email cannot be empty"});
+        return
+    }
+    if(!req.body.password){
+        res.status(400).send({message: "Password cannot be empty"});
+        return
+    }
+    // Create a user
+    const user = new User({
+        email: req.body.email.toLowerCase(),
+        password: bcrypt.hashSync(req.body.password, 8),
+        authCode: authCode
+    });
+    // let template = VerifyEmailTemplate(email, authCode)
+    await user
+        .save(user)
+        .then( async(data) => {
+            // success creating account send code to user
+            let template = verifyEmailTemplate(data.email, authCode)
+            try {
+       sendEmail(
+            data.email,
+            "mendyak99@gmail.com",
+            "Email Verification",
+            template,
+            "Test"
+          );
+            } catch(e){
+                console.log('in send eamil catch...')
+               console.log(e)     
+            }
+            let dataToReturn = {
+                id: data.id,
+                email: data.email,
+                authCode: authCode,
+                isEmailVerified: data.isEmailVerified
+            }
+            // create profile instance
+          const userProfileInstance =  new Profile({
+              userId: data.id,
+          })
+          await userProfileInstance.save(userProfileInstance).then((profileRes) => {
+            res.send({
+                message: "success",
+                userInfo: dataToReturn
+            });
+          })
+        })
+        .catch(err => {
+            console.log('in catch...')
+            res.status(500).send({
+                message:
+                    err.message || "error."
+            });
+        });
 
-                    user.save().then(function() {
-                        res.status(201).json({
-                            message: "Registration successful"
-                        })
-                    }).catch(function(err) {
-                        console.log(err);
-                        res.status(500).json({
-                            error: err
-                        })
-                    })
-                }
-            })
 
+}
+
+// verify email or phone
+
+exports.verifyAccount = (req, res) => {
+
+    // to refactored later
+    if(!req.body.email){
+        res.status(400).send({message: "Email cannot be empty"});
+        return
+    }
+    if(!req.body.code){
+        res.status(400).send({message: "Code cannot be empty"});
+        return
+    }
+    User.findOne({
+        email: req.body.email
+    }).exec( async (err, user) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+            if (parseInt(user.authCode) !== parseInt(req.body.code)){
+                return res.status(401).send({message: "invalid code"})
+            }
+        // await findOneAndUpdate
+         await  User.updateOne( {email : req.body.email }, { $set: { isEmailVerified: true }}).then((data) => {
+            //  console.log(data)
+            let dataToReturn = {
+            id: user._id,
+            email: user.email,
+            isEmailVerified: 'true'
         }
+            res.status(200).send({
+                message:"success",
+                userInfo: dataToReturn
+            });
+
+        }).catch((error) => {
+                res.status(500).send({
+                message:
+                    error.message || "error."
+            });
+        });
     })
-
-
 }
 
 // Retrieve all users - GET - "/"

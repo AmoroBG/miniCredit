@@ -10,6 +10,10 @@ const users = require("../controllers/users")
 // Register user - POST - "/register"
 router.post("/register", users.registerUser)
 
+// verify account
+
+router.put("/verify-account", users.verifyAccount)
+
 // Retrieve all users - GET - "/"
 router.get("/", users.getAllUsers)
 
