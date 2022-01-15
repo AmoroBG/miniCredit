@@ -1,5 +1,28 @@
 const Profile = require("../models/profile")
 
+exports.updateUserProfile = (req, res) => {
+// userid is passed as params from frontend
+    const profileData = {
+        firstName: req.body.firstName.toLowerCase(),
+        lastName: req.body.lastName.toLowerCase(),
+        phone: req.body.phone,
+        gender: req.body.gender,
+    };
+
+    await  Profile.updateOne( {user: req.params.userId}, { $set: profileData }).then((data) => {
+        
+        res.status(200).send({
+            message:"success"
+        });
+
+    }).catch((error) => {
+            res.status(500).send({
+            message:
+                error.message || "error."
+        });
+    });
+}
+
 // Retrieve all User Profile - GET - "/"
 exports.getAllProfile = function(req, res) {
         Profile.find().then(function(profile) {
